@@ -3,26 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>Microsoft Clarity</title>
+  <script src="https://res.cdn.office.net/teams-js/2.22.0/js/MicrosoftTeams.min.js"></script>
   <style>
-    body { margin: 0; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; background: #f3f2f1; }
-    h2 { color: #0073ff; }
-    a { display: inline-block; margin-top: 16px; padding: 12px 24px; background: #0073ff; color: white; text-decoration: none; border-radius: 6px; font-size: 16px; }
-    a:hover { background: #005ecb; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #f3f2f1;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px 48px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+    h2 { color: #0073ff; margin-bottom: 12px; font-size: 22px; }
+    p { color: #555; margin-bottom: 24px; font-size: 15px; }
+    button {
+      padding: 12px 28px;
+      background: #0073ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover { background: #005ecb; }
   </style>
-  <script>
-    window.onload = function() {
-      var url = 'https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0';
-      var w = window.screen.availWidth * 0.85;
-      var h = window.screen.availHeight * 0.85;
-      var left = (window.screen.availWidth - w) / 2;
-      var top = (window.screen.availHeight - h) / 2;
-      window.open(url, 'ClarityPopup', 'width=' + w + ',height=' + h + ',top=' + top + ',left=' + left + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no');
-    };
-  </script>
 </head>
 <body>
-  <h2>Microsoft Clarity</h2>
-  <p>Abriendo Clarity...</p>
-  <a href="https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0" target="ClarityPopup" onclick="window.open(this.href,'ClarityPopup','width=1280,height=800,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no');return false;">Abrir Clarity</a>
+  <div class="card">
+    <h2>Microsoft Clarity</h2>
+    <p>Haz clic para abrir las grabaciones en directo.</p>
+    <button id="openBtn">Abrir Clarity</button>
+  </div>
+  <script>
+    var CLARITY_URL = 'https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0';
+
+    microsoftTeams.app.initialize().then(function() {
+      // Abrir automaticamente al cargar
+      openClarity();
+    }).catch(function() {
+      // Fuera de Teams: abrir directamente
+      window.open(CLARITY_URL, '_blank');
+    });
+
+    document.getElementById('openBtn').addEventListener('click', openClarity);
+
+    function openClarity() {
+      if (microsoftTeams.dialog && microsoftTeams.dialog.url) {
+        microsoftTeams.dialog.url.open({
+          title: 'Microsoft Clarity',
+          url: CLARITY_URL,
+          size: { height: 800, width: 1200 }
+        }, function() {});
+      } else {
+        window.open(CLARITY_URL, 'ClarityPopup', 'width=1200,height=800,resizable=yes,scrollbars=yes');
+      }
+    }
+  </script>
 </body>
 </html>
