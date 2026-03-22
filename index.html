@@ -11,13 +11,18 @@
   </style>
   <script>
     window.onload = function() {
-      window.open('https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0', '_blank');
+      var url = 'https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0';
+      var w = window.screen.availWidth * 0.85;
+      var h = window.screen.availHeight * 0.85;
+      var left = (window.screen.availWidth - w) / 2;
+      var top = (window.screen.availHeight - h) / 2;
+      window.open(url, 'ClarityPopup', 'width=' + w + ',height=' + h + ',top=' + top + ',left=' + left + ',resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no');
     };
   </script>
 </head>
 <body>
   <h2>Microsoft Clarity</h2>
-  <p>Abriendo Clarity en el navegador...</p>
-  <a href="https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0" target="_blank">Abrir Clarity</a>
+  <p>Abriendo Clarity...</p>
+  <a href="https://clarity.microsoft.com/projects/view/vzpgwxpgmr/gettingstarted?date=Last%203%20days&view=liveRecordings&list=0" target="ClarityPopup" onclick="window.open(this.href,'ClarityPopup','width=1280,height=800,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,status=no');return false;">Abrir Clarity</a>
 </body>
 </html>
